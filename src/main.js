@@ -252,7 +252,7 @@ car.innerHTML = obras
   .map(
     (o, i) => `<figure>
       <button type="button" class="obra-btn" data-i="${i}" aria-label="Ver as ${o.fotos} fotos desta obra: ${esc(o.texto)}">
-        <img src="${BASE}obras/${o.n}.webp" alt="" loading="lazy" width="720" height="900" draggable="false" />
+        <img src="${BASE}obras/${o.n}.webp" alt="${esc(o.texto)}" loading="lazy" width="720" height="900" draggable="false" />
         <span class="obra-n">${o.fotos} fotos</span>
       </button>
       <figcaption>${esc(o.texto)}</figcaption>
