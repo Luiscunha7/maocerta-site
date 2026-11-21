@@ -8,6 +8,7 @@ import Lenis from 'lenis';
 import obras from './obras.json';
 
 gsap.registerPlugin(ScrollTrigger);
+const BASE = import.meta.env.BASE_URL; // '/' no domínio próprio; '/maocerta-site/' no endereço do GitHub
 const reduz = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -129,7 +130,7 @@ function carregar() {
       frames[i] = img;
       if (i === frameAtual || !frames[frameAtual]) desenhar();
     };
-    img.src = `/film/${p}/${String(i + 1).padStart(3, '0')}.webp`;
+    img.src = `${BASE}film/${p}/${String(i + 1).padStart(3, '0')}.webp`;
   });
 }
 
@@ -240,7 +241,7 @@ car.innerHTML = obras
   .map(
     (o, i) => `<figure>
       <button type="button" class="obra-btn" data-i="${i}" aria-label="Ver as ${o.fotos} fotos desta obra: ${esc(o.texto)}">
-        <img src="/obras/${o.n}.webp" alt="" loading="lazy" width="720" height="900" draggable="false" />
+        <img src="${BASE}obras/${o.n}.webp" alt="" loading="lazy" width="720" height="900" draggable="false" />
         <span class="obra-n">${o.fotos} fotos</span>
       </button>
       <figcaption>${esc(o.texto)}</figcaption>
@@ -307,7 +308,7 @@ const vImg = $('#visor-img');
 const vPalco = $('#visor-palco');
 let vObra = 0;
 let vFoto = 1;
-const fotoUrl = (o, k) => `/obras/${o.n}/${k}.webp`;
+const fotoUrl = (o, k) => `${BASE}obras/${o.n}/${k}.webp`;
 function mostrarFoto() {
   const o = obras[vObra];
   vImg.src = fotoUrl(o, vFoto);
