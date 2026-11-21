@@ -28,6 +28,7 @@ button { font: inherit; color: inherit; }
 h1, h2, h3 { font-weight: 800; line-height: 1.08; letter-spacing: -0.02em; }
 h2 { font-size: clamp(32px, 4.6vw, 60px); }
 .amarelo { color: var(--amarelo); }
+.grande .amarelo { white-space: nowrap; }
 .sobre { font-weight: 600; font-size: 14px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--amarelo2); margin-bottom: 14px; }
 
 /* Botões */
@@ -335,7 +336,18 @@ h2 { font-size: clamp(32px, 4.6vw, 60px); }
 .rodape a:hover { color: var(--amarelo); }
 .rod-marca p { margin-top: 12px; }
 .rod-nav { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 8px 26px; padding-top: 22px; border-top: 1px solid var(--linha); }
-.rod-fim { grid-column: 1 / -1; font-size: 13px; }
+.rod-fim { grid-column: 1 / -1; font-size: 13px; display: flex; flex-wrap: wrap; gap: 6px 22px; }
+.rod-fim a { color: var(--texto2); text-decoration: underline; text-underline-offset: 3px; }
+
+/* Páginas de texto (política de privacidade) */
+.pagina { max-width: 760px; margin: 0 auto; padding: calc(var(--topo) + 56px) var(--gutter) 90px; }
+.pagina h1 { font-size: clamp(34px, 5vw, 56px); margin-bottom: 12px; }
+.pagina .data { color: var(--texto2); font-size: 15px; margin-bottom: 40px; }
+.pagina h2 { font-size: clamp(22px, 2.6vw, 30px); margin: 44px 0 12px; }
+.pagina p, .pagina li { color: #d8d3ca; margin-bottom: 12px; }
+.pagina ul { padding-left: 22px; }
+.pagina a { color: var(--texto); text-decoration: underline; text-decoration-color: var(--amarelo); text-underline-offset: 4px; }
+.pagina .voltar { display: inline-block; margin-top: 40px; }
 @media (max-width: 899px) { .rodape { grid-template-columns: 1fr; padding-bottom: 110px; } }
 
 .revela { opacity: 0; transform: translateY(28px); }
