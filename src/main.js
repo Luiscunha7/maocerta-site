@@ -132,7 +132,7 @@ function carregar() {
     img.onload = () => {
       if (p !== pastaAtual) return;
       frames[i] = img;
-      if (i === frameAtual || !frames[frameAtual]) desenhar();
+      if (i <= frameAtual || !frames[frameAtual]) desenhar();
     };
     img.src = `${BASE}film/${p}/${String(i + 1).padStart(3, '0')}.webp`;
   });
@@ -177,8 +177,10 @@ function medir() {
 function desenhar() {
   let img = frames[frameAtual];
   if (!img) {
-    // usa o frame carregado mais próximo
-    for (let d = 1; d < TOTAL && !img; d++) img = frames[frameAtual - d] || frames[frameAtual + d];
+    // enquanto o frame certo não chega, usa o último já carregado ANTES dele (nunca um mais à frente:
+    // a câmara aproxima-se ao longo do filme e alternar entre frames de trás e da frente faz a casa crescer e encolher)
+    for (let i = frameAtual - 1; i >= 0 && !img; i--) img = frames[i];
+    for (let i = frameAtual + 1; i < TOTAL && !img; i++) img = frames[i];
   }
   ctx.fillStyle = '#f0ebea';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -203,7 +205,11 @@ function desenhar() {
 
 carregar();
 medir();
+let larguraAnterior = innerWidth;
 addEventListener('resize', () => {
+  // no telemóvel a barra de endereço aparece e desaparece ao fazer scroll: isso muda a altura, não a largura, e não deve mexer na casa
+  if (innerWidth === larguraAnterior && innerWidth < 900) return;
+  larguraAnterior = innerWidth;
   if (innerWidth >= 900) fecharMenu();
   carregar();
   medir();
