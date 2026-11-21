@@ -338,7 +338,9 @@ h2 { font-size: clamp(32px, 4.6vw, 60px); }
 .rod-marca p { margin-top: 12px; }
 .rod-nav { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 8px 26px; padding-top: 22px; border-top: 1px solid var(--linha); }
 .rod-fim { grid-column: 1 / -1; font-size: 13px; display: flex; flex-wrap: wrap; gap: 6px 22px; }
-.rod-fim a { color: var(--texto2); text-decoration: underline; text-underline-offset: 3px; }
+.rod-fim a { color: var(--texto); text-decoration: underline; text-decoration-color: var(--amarelo); text-underline-offset: 4px; }
+@media (max-width: 899px) { .rod-fim { font-size: 15px; flex-direction: column; gap: 12px; } }
+.menu-movel nav a.menu-legal { font-weight: 600; font-size: 16px; letter-spacing: 0; color: var(--texto2); border-bottom: 0; }
 
 /* Páginas de texto (política de privacidade) */
 .pagina { max-width: 760px; margin: 0 auto; padding: calc(var(--topo) + 56px) var(--gutter) 90px; }
