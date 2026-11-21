@@ -102,7 +102,8 @@ document.addEventListener('click', (e) => {
 });
 
 /* ---------- Hero: a casa que abre ---------- */
-const TOTAL = 61;
+const TOTAIS = { d: 61, m: 121 }; // no telemóvel há o dobro dos frames, para o movimento ficar fluido
+let TOTAL = TOTAIS[innerWidth >= 900 ? 'd' : 'm'];
 const FIM_FILME = 0.6; // o filme acaba aqui; o resto do scroll mostra as especialidades
 const canvas = $('.filme');
 const ctx = canvas.getContext('2d');
@@ -117,7 +118,10 @@ let rect = { x: 0, y: 0, w: 0, h: 0 };
 function carregar() {
   const p = pasta();
   if (p === pastaAtual) return;
+  const antes = TOTAL;
   pastaAtual = p;
+  TOTAL = TOTAIS[p];
+  frameAtual = reduz ? TOTAL - 1 : Math.round((frameAtual / (antes - 1)) * (TOTAL - 1));
   frames = new Array(TOTAL);
   // primeiro e último, depois uma passagem larga (de 4 em 4), depois o resto
   const meio = Array.from({ length: TOTAL - 2 }, (_, i) => i + 1);
@@ -137,7 +141,7 @@ function carregar() {
 function medir() {
   const w = innerWidth;
   const h = canvas.parentElement.clientHeight;
-  const dpr = Math.min(devicePixelRatio || 1, 2);
+  const dpr = Math.min(devicePixelRatio || 1, w >= 900 ? 2 : 3);
   canvas.width = Math.round(w * dpr);
   canvas.height = Math.round(h * dpr);
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -180,6 +184,7 @@ function desenhar() {
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   if (!img) return;
   const { x, y, w, h } = rect;
+  ctx.imageSmoothingQuality = 'high';
   ctx.drawImage(img, x, y, w, h);
   // esbate as margens do vídeo para o fundo
   const fx = w * 0.1, fy = h * 0.12;
@@ -212,15 +217,15 @@ document.fonts?.ready.then(medir);
 
 if (!reduz) {
   const tl = gsap.timeline({
-    scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom bottom', scrub: true },
+    scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom bottom', scrub: innerWidth >= 900 ? true : 0.5 },
     defaults: { ease: 'none' },
   });
   const estado = { f: 0 };
   tl.to(estado, {
-    f: TOTAL - 1,
+    f: 1,
     duration: FIM_FILME,
     onUpdate: () => {
-      const n = Math.round(estado.f);
+      const n = Math.round(estado.f * (TOTAL - 1));
       if (n !== frameAtual) {
         frameAtual = n;
         desenhar();
