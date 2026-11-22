@@ -353,6 +353,7 @@ h1 .sobre { display: block; line-height: 1.6; }
 @media (max-width: 899px) { .rodape { grid-template-columns: 1fr; padding-bottom: 110px; } }
 
 .revela { opacity: 0; transform: translateY(28px); }
+.revela-linha { opacity: 0; }
 
 @media (prefers-reduced-motion: reduce) {
   .hero { height: auto; }
@@ -360,6 +361,6 @@ h1 .sobre { display: block; line-height: 1.6; }
   .fase-1 { opacity: 0; visibility: hidden; }
   .fase-3, .etq { opacity: 1; visibility: visible; }
   .dica { display: none; }
-  .revela { opacity: 1; transform: none; }
+  .revela, .revela-linha { opacity: 1; transform: none; }
   .realce { animation: none; outline: 3px solid var(--amarelo); }
 }

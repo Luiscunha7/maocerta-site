@@ -364,8 +364,10 @@ vPalco.addEventListener('pointerup', (e) => {
 if (!reduz) {
   const blocos = '.impacto .grande, .impacto .sub, .destaque-foto, .destaque-texto, .outros-cabeca, .servicos-lista li, .urgente, .obras-cabeca, .como h2, .passos li, .como-cta, .condominios, .faq h2, .faq-lista, .orc-texto, .form';
   gsap.utils.toArray(blocos).forEach((el) => {
-    el.classList.add('revela');
-    gsap.to(el, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 90%', once: true }, onComplete: () => gsap.set(el, { clearProps: 'transform' }) });
+    // as linhas das listas (e tudo, no telemóvel) só esbatem: se também subissem, com scroll rápido ficavam umas por cima das outras a meio do movimento
+    const linha = innerWidth < 900 || el.matches('.servicos-lista li, .passos li');
+    el.classList.add(linha ? 'revela-linha' : 'revela');
+    gsap.to(el, { opacity: 1, y: 0, duration: linha ? 0.45 : 0.8, ease: linha ? 'power1.out' : 'power3.out', scrollTrigger: { trigger: el, start: linha ? 'top 96%' : 'top 90%', once: true }, onComplete: () => gsap.set(el, { clearProps: 'transform' }) });
   });
   gsap.to('.passos', { '--prog': 1, ease: 'none', scrollTrigger: { trigger: '.passos', start: 'top 75%', end: 'bottom 55%', scrub: true } });
 }
